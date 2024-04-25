@@ -3,13 +3,13 @@ import { Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from './contexts/AuthContext';
 
 import Onboarding from './screens/Onboarding';
 import Profile from './screens/Profile';
 import SplashScreen from './screens/SplashScreen';
 
 const Stack = createNativeStackNavigator();
-const AuthContext = createContext();
 
 export default function App({navigation}) {
 
@@ -21,6 +21,11 @@ export default function App({navigation}) {
             ...prevState,
             isOnboardingCompleted: action.isOnboardingCompleted,
             isLoading: false,
+          };
+        case 'SET_LOADING':
+          return {
+            ...prevState,
+            isLoading: action.isLoading,
           };
         default:
           return prevState;
@@ -42,13 +47,14 @@ export default function App({navigation}) {
         // If onboarding status is retrieved successfully, update state
         if (getUserProfile !== null) {
           dispatch({ type: "ONBOARD", isOnboardingCompleted: true });
+        } else {
+          dispatch({ type: "ONBOARD", isOnboardingCompleted: false });
         }
+        dispatch({ type: 'SET_LOADING', isLoading: false });
       } catch (e) {
         // if any error during AsyncStorage operation
         console.error('Error retrieving onboarding status:', e);
-      } finally {
-        dispatch({ type: "ONBOARD", isOnboardingCompleted: false });
-      }
+      } 
     };
     checkOnboardingStatus();
   }, []);
@@ -81,10 +87,11 @@ export default function App({navigation}) {
       logout: async () => {
         try {
           await AsyncStorage.clear();
+          dispatch({ type: "ONBOARD", isOnboardingCompleted: false });
         } catch (e) {
           console.error('Error at authContext logout:', e);
+          Alert.alert("Error", "Failed to log out. Please try again!");
         }
-        dispatch({ type: "ONBOARD", isOnboardingCompleted: false });
       },
     }),
     [state.isOnboardingCompleted]
