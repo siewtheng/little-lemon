@@ -2,11 +2,12 @@ import React from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 
 
-const SplashScreen = () => (
+const SplashScreen = () => {
+  return (
     <View style={styles.splashView}>
       <ActivityIndicator size="large" />
     </View>
-);
+)};
 
 const styles = StyleSheet.create({
     splashView: {
