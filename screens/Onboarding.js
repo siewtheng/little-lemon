@@ -1,14 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet } from 'react-native';
 import { validateEmail, validateName } from '../utils/validation.js'
-import { AuthContext } from '../contexts/AuthContext.js';
+import { useAuth } from '../contexts/AuthContext';
 
 const Onboarding = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isValid, setIsValid] = useState(false);
 
-  const { onboard } = useContext(AuthContext);
+  const { authActions } = useAuth();
 
   const handleNameChange = text => {
     setName(text);
@@ -22,7 +22,7 @@ const Onboarding = () => {
 
   const handlePress = async () => {
     // call onboard function from AUthContext with name and email
-    await onboard({name, email});
+    await authActions.onboard({ name, email });
   };
 
   return (

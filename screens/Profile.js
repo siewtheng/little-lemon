@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, TextInput, Text, Image, Button, StyleSheet } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AuthContext } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 
 import { MaskedTextInput } from 'react-native-mask-text';
 import * as ImagePicker from 'expo-image-picker';
@@ -10,7 +10,7 @@ import Checkbox from 'expo-checkbox';
 
 
 const Profile = () => {
-  const { logout } = useContext(AuthContext);
+  const { state, authActions } = useAuth();
 
   const [profile, setProfile] = useState({
     name: '',
@@ -129,7 +129,7 @@ const Profile = () => {
 
         <Button 
           title="Logout" 
-          onPress={logout}
+          onPress={authActions.logout}
           color="#ff6347"   
       />
 
@@ -177,6 +177,3 @@ const styles = StyleSheet.create({
 
 
 export default Profile;
-
-/*
-*/
