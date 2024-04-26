@@ -10,6 +10,7 @@ The key features include:
 * Searching for dishes by name
 * Customising user profile
 
+
 ## Screenshots 📸
 ![Little Lemon Screenshots](images/little-lemon-screenshots.png)
 
@@ -25,14 +26,17 @@ The key features include:
 * AsyncStorage
 * StyleSheet
 
+
 ## Running the Project ▶️
 The app can be tested on iOS and Android using expo.
 1. Clone the repository
 2. Run ```npm install```
 3. Run ```npx expo start```
 
+
 ## My Learning Process 🎓
 Building this app as the capstone project for the Coursera React Native course was an invaluable learning experience. Here are some key highlights:
+
 
 ### Key Learnings 🗝️
 * Applying UX/UI principles to create effective mobile app interfaces and flows using Figma. This included building wireframes, Auto Layout components, variants, and high-fidelity mockups.
@@ -47,9 +51,11 @@ Building this app as the capstone project for the Coursera React Native course w
 * Creating text input validations and using MaskedTextInput for formatted text entries.
 * Building forms with text inputs, handling submissions, and input validations.
 
+
 ### Challenges 🚧
 * Getting up to speed with React Native specific concepts and libraries. The course content provided a solid foundation but still a learning curve from React web development.
 * Implementing best practices for mobile UI and UX design. 
+
 
 ### Future Enhancements 🚀
 * Implement account authentication with login
