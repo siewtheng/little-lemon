@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer, useMemo } from 'react';
+import React, { useEffect, useReducer, useMemo } from 'react';
 import { Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -41,21 +41,26 @@ export default function App({navigation}) {
   useEffect(() => {
     // Fetch onboarding status from AsyncStorage
     const checkOnboardingStatus = async () => {
+      
       try {
         // Attempt to fetch onboarding status from AsyncStorage
         const getUserProfile = await AsyncStorage.getItem("profile");
 
-        // If onboarding status is retrieved successfully, update state
-        if (getUserProfile !== null) {
-          dispatch({ type: "ONBOARD", isOnboardingCompleted: true });
-        } else {
-          dispatch({ type: "ONBOARD", isOnboardingCompleted: false });
-        }
-        dispatch({ type: 'SET_LOADING', isLoading: false });
+        setTimeout(() => {
+          // If onboarding status is retrieved successfully, update state
+          if (getUserProfile !== null) {
+            dispatch({ type: "ONBOARD", isOnboardingCompleted: true });
+          } else {
+            dispatch({ type: "ONBOARD", isOnboardingCompleted: false });
+          }
+          dispatch({ type: 'SET_LOADING', isLoading: false });
+        }, 1500);
+        
       } catch (e) {
         // if any error during AsyncStorage operation
         console.error('Error retrieving onboarding status:', e);
       } 
+
     };
     checkOnboardingStatus();
   }, []);
@@ -78,6 +83,7 @@ export default function App({navigation}) {
         try {
           const jsonValue = JSON.stringify(data);
           await AsyncStorage.setItem("profile", jsonValue);
+          await AsyncStorage.setItem('imageUri', image);
         } catch (e) {
           console.error('Error at authContext update:', e);
         }
@@ -88,6 +94,7 @@ export default function App({navigation}) {
       logout: async () => {
         try {
           await AsyncStorage.removeItem("profile");
+          await AsyncStorage.removeItem("imageUri");
           dispatch({ type: "ONBOARD", isOnboardingCompleted: false });
         } catch (e) {
           console.error('Error at authContext logout:', e);
