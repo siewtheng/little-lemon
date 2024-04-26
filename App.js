@@ -8,6 +8,7 @@ import { AuthContext } from './contexts/AuthContext';
 import Onboarding from './screens/Onboarding';
 import Profile from './screens/Profile';
 import SplashScreen from './screens/SplashScreen';
+import Home from './screens/Home';
 
 const Stack = createNativeStackNavigator();
 
@@ -86,7 +87,7 @@ export default function App({navigation}) {
       // Clear AsyncStorage and logout user
       logout: async () => {
         try {
-          await AsyncStorage.clear();
+          await AsyncStorage.removeItem("profile");
           dispatch({ type: "ONBOARD", isOnboardingCompleted: false });
         } catch (e) {
           console.error('Error at authContext logout:', e);
@@ -107,7 +108,17 @@ export default function App({navigation}) {
       <NavigationContainer>
         <Stack.Navigator>
           {state.isOnboardingCompleted ? (
-            <Stack.Screen name="Profile" component={Profile} />
+            <>
+              <Stack.Screen 
+                name="Home" 
+                component={Home} 
+                options={{ headerShown: false }} // Hide header
+              />
+              <Stack.Screen 
+                name="Profile" 
+                component={Profile} 
+              />
+            </>
           ) : (
             <Stack.Screen
               name="Onboarding"
