@@ -1,8 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, Image, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import colors from '../constants/colors';
 
-const SplashScreen = () => {
+const SplashScreen = ({onReady}) => {
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onReady();
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [onReady]);
 
   return (
     <View style={styles.splashView}>

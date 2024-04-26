@@ -7,6 +7,7 @@ import SplashScreen from './screens/SplashScreen';
 const AppContent = () => {
   const { state, authActions } = useAuth();
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [splashTimeElapsed, setSplashTimeElapsed] = useState(false);
 
   async function loadResourcesAndDataAsync() {
     try {
@@ -21,13 +22,11 @@ const AppContent = () => {
   useEffect(() => {
     loadResourcesAndDataAsync();
     authActions.setLoading(true);
-    setTimeout(() => { 
-      authActions.onboard({});
-    }, 1500);
+    authActions.checkOnboard({});
   }, [authActions]);
 
-  if (state.isLoading) {
-    return <SplashScreen />;
+  if (!splashTimeElapsed || !fontsLoaded || state.isLoading) {
+    return <SplashScreen onReady={() => setSplashTimeElapsed(true)} />;
   }
 
   return <AppNavigator isOnboardingCompleted={state.isOnboardingCompleted} />;

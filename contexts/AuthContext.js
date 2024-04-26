@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useMemo } from 'react';
+import React, { createContext, useContext, useReducer, useMemo, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AuthContext = createContext();
@@ -48,9 +48,21 @@ export const AuthProvider = ({ children }) => {
         console.error('Error at authContext onboard:', e);
       }
     },
+    checkOnboard: async () => {
+      try {
+        const getUserProfile = await AsyncStorage.getItem("profile");
+        const isOnboardingCompleted = getUserProfile !== null;
+        dispatch({ type: authActionTypes.ONBOARD, isOnboardingCompleted });
+      } catch (e) {
+        console.error('Error retrieving onboarding status:', e);
+      } finally {
+        dispatch({ type: authActionTypes.SET_LOADING, isLoading: false });
+      }
+    },
     logout: async () => {
       try {
         await AsyncStorage.removeItem("profile");
+        await AsyncStorage.removeItem("imageUri");
         dispatch({ type: authActionTypes.ONBOARD, isOnboardingCompleted: false });
       } catch (e) {
         console.error('Error at authContext logout:', e);
