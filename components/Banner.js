@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TextInput, StyleSheet } from 'react-native';
+import colors from '../constants/colors';
+import { fonts } from '../constants/fonts';
 
 const Banner = ({ title, subtitle, description, searchText, onChangeSearchText }) => {
     return (
@@ -20,6 +22,7 @@ const Banner = ({ title, subtitle, description, searchText, onChangeSearchText }
                 placeholder="Search..."
                 value={searchText}
                 onChangeText={onChangeSearchText}
+                placeholderTextColor={colors.text}
             />
         </View>
     );
@@ -31,7 +34,7 @@ const styles = StyleSheet.create({
         paddingRight: 20,
         paddingBottom: 20,
         paddingTop: 10,
-        backgroundColor: '#004d40',
+        backgroundColor: colors.primaryGreen,
         marginBottom: 10,
     },
 
@@ -55,20 +58,23 @@ const styles = StyleSheet.create({
     },
 
     bannerTitle: {
-        fontSize: 36,
-        fontWeight: '900',
+        fontSize: 60,
+        fontFamily: fonts.markaziText.bold,
+        color: colors.primaryYellow,
+        marginBottom: -20,
     },
 
     bannerSubtitle: {
-        fontSize: 26,
-        color: '#ffffff',
-        fontWeight: '500',
-        marginBottom: 10,
+        fontSize: 40,
+        fontFamily: fonts.markaziText.semiBold,
+        color: colors.background,
+        marginBottom: 5,
     },
 
     bannerDescription: {
         fontSize: 16,
-        color: '#ffffff',
+        fontFamily: fonts.karla.medium,
+        color: colors.background,
         marginBottom: 20,
     },
 
@@ -76,10 +82,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         padding: 10,
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: colors.secondaryOrange,
+        color: colors.text,
         borderRadius: 5,
         width: '100%',
-    }
+        backgroundColor: colors.secondaryLightOrange,
+    },
+
 });
 
 export default Banner;

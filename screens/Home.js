@@ -8,6 +8,8 @@ import CustomHeader from '../components/CustomHeader';
 import CategoryList from '../components/CategoryList';
 import { filterMenuItemsByCategory, fetchFilteredMenuItems } from '../utils/filter';
 import Banner from '../components/Banner';
+import colors from '../constants/colors';
+import { fonts } from '../constants/fonts';
 
 const URL = "https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/capstone.json";
 const db = openDatabase('little_lemon');
@@ -145,8 +147,9 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize: 20,
-        fontWeight: "800",
         marginBottom: 2,
+        marginTop: 2,
+        fontFamily: fonts.karla.extraBold,
     },
 
     menuItem: {
@@ -172,13 +175,14 @@ const styles = StyleSheet.create({
     },
 
     name: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 2,
+        fontSize: 20,
+        fontFamily: fonts.karla.semiBold,
+        marginBottom: 0,
     },
 
     description: {
         fontSize: 16,
+        fontFamily: fonts.karla.regular,
         color: '#666',
         marginTop: 5,
         height: 40,
@@ -186,8 +190,9 @@ const styles = StyleSheet.create({
     },
 
     price: {
-        fontSize: 16,
-        color: 'green',
+        fontSize: 24,
+        fontFamily: fonts.markaziText.semiBold,
+        color: colors.primaryGreen,
         marginTop: 5,
         marginBottom: 15,
     },

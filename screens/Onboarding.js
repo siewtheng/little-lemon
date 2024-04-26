@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import { validateEmail, validateName } from '../utils/validation.js'
 import { useAuth } from '../contexts/AuthContext';
+import colors from '../constants/colors';
+import { fonts } from '../constants/fonts';
 
 const Onboarding = () => {
   const [name, setName] = useState('');
@@ -26,95 +28,136 @@ const Onboarding = () => {
   };
 
   return (
-    <View style={styles.container}>
-        <Image
-          source={require('../assets/Logo.png')}
-          style={styles.logo}
-          accessible={true}
-          accessibilityLabel={"Little Lemon Logo"}
-        />
+    <ScrollView contentContainerStyle={styles.container}>
+      
+          <Image
+            source={require('../assets/Logo.png')}
+            style={styles.logo}
+            accessible={true}
+            accessibilityLabel={"Little Lemon Logo"}
+          />
 
-        <Text style={styles.welcomeText}>
-            Welcome to Little Lemon Restaurant !
-        </Text>
+          <Text style={styles.welcomeText}>
+              Welcome to Little Lemon Restaurant !
+          </Text>
 
-        <Text style={styles.inputTitle}>Full Name</Text>
-        <TextInput
-            placeholder="Enter your name"
-            value={name}
-            onChangeText={handleNameChange}
-            style={styles.input}
-        />
+          <Image
+            source={require('../assets/restaurant.jpg')}
+            style={styles.restaurantImage}
+            accessible={true}
+            accessibilityLabel={"Restaurant Logo"}
+          />
 
-        <Text style={styles.inputTitle}>Email Address</Text>
-        <TextInput
-            value={email}
-            onChangeText={handleEmailChange}
-            placeholder="Enter your email"
-            keyboardType="email-address"
-            autoCapitalize='none'
-            style={styles.input}
-        />
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Full Name</Text>
+            <TextInput
+                placeholder="Enter your name"
+                value={name}
+                onChangeText={handleNameChange}
+                style={styles.input}
+            />
 
-        <Button
-            title="Next"
-            onPress={handlePress}
-            disabled={!isValid}
-            style={styles.button}
-        />
-    </View>
+            <Text style={styles.inputTitle}>Email Address</Text>
+            <TextInput
+                value={email}
+                onChangeText={handleEmailChange}
+                placeholder="Enter your email"
+                keyboardType="email-address"
+                autoCapitalize='none'
+                style={styles.input}
+            />
+          </View>
+
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+                onPress={handlePress}
+                disabled={!isValid}
+                style={isValid ? styles.enabled : styles.disabled}
+            >
+                <Text style={isValid ? styles.textEnabled : styles.textDisabled}>Next</Text>
+            </TouchableOpacity >
+          </View>
+      
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-    container : {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center" 
-      },
-    
-    logo: {
-        resizeMode: "contain",
-        marginTop: 50,
-        height: 100,
-        width: 150
-    },
-
-    welcomeText: {
-        fontSize: 30,
-        textAlign: "center",
-        marginTop: 20
-    },
-
-    inputTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 5,
-    },
-
-    input: {
-        fontSize: 18,
-        height: 50,
-        borderRadius: 10,
-        borderWidth: 1,
-        paddingLeft: 10,
-        paddingRight: 10,
-        marginTop: 20,
-        alignSelf: "stretch",
-        borderColor: "black"
-    },
-
-    button: {
-        backgroundColor: "#027148",
-        borderRadius: 10,
-        borderWidth: 1,
-        paddingLeft: 10,
-        paddingRight: 10,
-        marginTop: 20,
-        alignSelf: "stretch",
-        borderColor: "black"
-
-    }
+  container: {
+    flexGrow: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    padding: 20,
+    paddingTop: 20,
+    backgroundColor: colors.background,
+  },
+  logo: {
+    width: "70%",
+    height: 80,
+    resizeMode: 'contain',
+    marginTop: 10,
+  },
+  restaurantImage: {
+    width: "90%",
+    height: 150,
+    borderRadius: 20,
+    marginBottom: 36,
+  },
+  welcomeText: {
+    fontSize: 24,
+    textAlign: 'center',
+    marginBottom: 25,
+    fontFamily: fonts.karla.extraBoldItalic,
+    color: colors.secondaryOrange,
+  },
+  inputContainer: {
+    width: '100%',
+  },
+  inputTitle: {
+    fontSize: 20,
+    fontFamily: fonts.karla.extraBoldItalic,
+    color: colors.text,
+  },
+  input: {
+    fontSize: 16,
+    height: 50,
+    borderRadius: 10,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    marginBottom: 20,
+    borderColor: colors.secondaryOrange,
+  },
+  buttonContainer: {
+    width: '100%',
+    marginTop: 20,
+  },
+  enabled: {
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: colors.primaryGreen,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  disabled: {
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: colors.background,
+    borderColor: colors.primaryGreen,
+    borderWidth: 1.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textEnabled: {
+    fontSize: 18,
+    fontFamily: fonts.karla.bold,
+    color: colors.background,
+  },
+  textDisabled: {
+    fontSize: 18,
+    fontFamily: fonts.karla.bold,
+    color: colors.text, 
+  },
 });
 
 export default Onboarding;
