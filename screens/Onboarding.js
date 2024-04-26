@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet } from 'react-native';
-import { validateEmail, validateName } from '../utils/index.js'
+import { validateEmail, validateName } from '../utils/validation.js'
 import { AuthContext } from '../contexts/AuthContext.js';
 
 const Onboarding = () => {
