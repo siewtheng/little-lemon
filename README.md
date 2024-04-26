@@ -2,12 +2,6 @@
 
 The Little Lemon app allows customers to browse, search, and order food for delivery/pickup from a fictional restaurant. It was built as the capstone project for the Meta React Native Specialization (Coursera).
 
-## Table of Content 📋
-* [Overview](#overview)
-* [Screenshots/Gif](#screenshots)
-* [Tech Stack](#tech-stack)
-* [Running the Project](#running-the-project)
-* [My Learning Process](#my-learning-process)
 
 ## Overview 📝
 The key features include:
