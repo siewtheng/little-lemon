@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import colors from '../constants/colors';
+import { fonts } from '../constants/fonts';
 
 const CategoryList = ({ categories, selectedCategories, onCategorySelect }) => {
     const isCategorySelected = (category) => selectedCategories.includes(category);
@@ -43,20 +45,21 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         marginHorizontal: 5,
         borderRadius: 15,
-        borderColor: '#ccc',
-        backgroundColor: "grey",
+        backgroundColor: '#ccc',
+        borderWidth: 1,
+        borderColor: colors.secondaryLightOrange,
         marginBottom: 5,
     },
     categoryItemSelected: {
-        backgroundColor: 'navy',
+        backgroundColor: colors.secondaryOrange,
     },
     categoryText: {
-        color: 'black',
+        color: colors.primaryGreen,
         fontSize: 16,
-        fontWeight: "bold",
+        fontFamily: fonts.karla.extraBold,
     },
     categoryTextSelected: {
-        color: 'white',
+        color: colors.background,
     },
 });
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import colors from '../constants/colors';
+import { fonts } from '../constants/fonts';
 
 import Onboarding from '../screens/Onboarding';
 import Profile from '../screens/Profile';
@@ -22,6 +24,21 @@ const AppNavigator = ({ isOnboardingCompleted }) => {
             <Stack.Screen 
               name="Profile" 
               component={Profile}
+              options={{
+                headerStyle: {
+                  backgroundColor: colors.primaryGreen,
+                },
+                headerTintColor: colors.background,
+                headerTitleStyle: {
+                  fontFamily: fonts.markaziText.bold,
+                  fontSize: 36,
+                },
+                title: 'My Profile',
+                headerBackTitleStyle: {
+                  fontFamily: fonts.karla.bold,
+                  fontSize: 20,
+                },
+              }}
             />
           </>
         ) : (

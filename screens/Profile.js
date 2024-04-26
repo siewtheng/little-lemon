@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, TextInput, Text, Image, Button, StyleSheet } from 'react-native';
-
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, Text, Image, Button, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../contexts/AuthContext';
-
 import { MaskedTextInput } from 'react-native-mask-text';
 import * as ImagePicker from 'expo-image-picker';
 import Checkbox from 'expo-checkbox';
+import colors from '../constants/colors';
+import { fonts } from '../constants/fonts';
 
 
 const Profile = () => {
@@ -83,16 +83,21 @@ const Profile = () => {
   };
   
   return (
-      <View>
-        
+    <ScrollView style={styles.container}>
+      <View style={styles.profileHeader}>
         {image ? 
           (<Image source={{ uri: image }} style={styles.image} />) : (
           (<View style={styles.initialsPlaceholder}>
             <Text style={styles.initialsText}>{getInitials(profile.name)}</Text>
           </View>)
         )}
-        <Button title="Pick an Image" onPress={pickImage} />
-        
+        <TouchableOpacity style={[styles.button, styles.pickImageButton]} onPress={pickImage}>
+          <Text style={styles.buttonImageText}>Pick an Image</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.inputLabel}>Name</Text>
         <TextInput
           value={profile.name}
           onChangeText={(text) => handleInputChange('name', text)}
@@ -100,77 +105,138 @@ const Profile = () => {
           style={styles.input}
         />
 
+        <Text style={styles.inputLabel}>Email</Text>
         <TextInput
           value={profile.email}
           onChangeText={(text) => handleInputChange('email', text)}
           placeholder="Enter email"
           style={styles.input}
         />
-        
-        <View>
-          <MaskedTextInput
-            mask="(999) 999-9999"
-            value={profile.phoneNumber}
-            onChangeText={(text) => handleInputChange('phoneNumber', text)}
-            style={styles.input}
-            placeholder="(123) 456 7890"
-            keyboardType="numeric"
+
+        <Text style={styles.inputLabel}>Phone Number</Text>
+        <MaskedTextInput
+          mask="(999) 999-9999"
+          value={profile.phoneNumber}
+          onChangeText={(text) => handleInputChange('phoneNumber', text)}
+          style={styles.input}
+          placeholder="(123) 456 7890"
+          keyboardType="numeric"
+        />
+        <View style={styles.checkboxContainer}>
+          <Text style={styles.checkboxLabel}>Subscribe to Notifications </Text>
+          <Checkbox
+            style={styles.checkbox}
+            value={profile.isNotiChecked}
+            onValueChange={(value) => handleInputChange('isNotiChecked', value)}
+            color={profile.isNotiChecked ? colors.primaryGreen : undefined}
           />
         </View>
+      </View>  
 
-        <Checkbox
-          style={styles.checkbox}
-          value={profile.isNotiChecked}
-          onValueChange={(value) => handleInputChange('isNotiChecked', value)}
-          color={profile.isNotiChecked ? '#4630EB' : undefined}
-        />
-
-        <Button title="Save Changes" onPress={saveProfile} />
-
-        <Button 
-          title="Logout" 
+        <TouchableOpacity
+          style={[styles.button, styles.saveButton]}
+          onPress={saveProfile}
+        >
+          <Text style={styles.buttonText}>Save Changes</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, styles.logoutButton]}
           onPress={authActions.logout}
-          color="#ff6347"   
-      />
+        >
+          <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
 
-      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   
-  input: {
-    height: 40,
-    width: 250,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+  container: {
+    flex: 1,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 0,
+    backgroundColor: colors.background,
   },
-
-  image: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    marginTop: 20,
-  },
-
-  initialsPlaceholder: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    marginTop: 20,
-    backgroundColor: '#ccc',
+  profileHeader: {
     alignItems: 'center',
+    marginVertical: 20,
+  },
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+  },
+  initialsPlaceholder: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    backgroundColor: '#ccc',
     justifyContent: 'center',
+    alignItems: 'center',
   },
-
   initialsText: {
-    fontSize: 40,
+    fontSize: 50,
     color: '#fff',
+    fontFamily: fonts.bold,
   },
-
+  section: {
+    marginTop: 0,
+  },
+  inputLabel: {
+    fontSize: 20,
+    fontFamily: fonts.karla.extraBoldItalic,
+    color: colors.text,
+  },
+  input: {
+    fontSize: 16,
+    height: 50,
+    borderRadius: 10,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    marginBottom: 20,
+    borderColor: colors.secondaryOrange,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
   checkbox: {
-    margin: 8,
+    marginLeft: 10,
+  },
+  checkboxLabel: {
+    fontSize: 20,
+    fontFamily: fonts.karla.extraBoldItalic,
+    color: colors.text,
+  },
+  button: {
+    padding: 10,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  buttonText: {
+    color: colors.background,
+    fontFamily: fonts.karla.bold,
+    fontSize: 18,
+  },
+  buttonImageText: {
+    color: colors.text,
+    fontFamily: fonts.karla.bold,
+    fontSize: 18,
+  },
+  pickImageButton: {
+    backgroundColor: colors.primaryYellow,
+  },
+  saveButton: {
+    backgroundColor: colors.primaryGreen,
+  },
+  logoutButton: {
+    backgroundColor: colors.error,
   },
 
 });

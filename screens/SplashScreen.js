@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     color: '#888',
+    fontWeight: "400"
   },
 })
 
