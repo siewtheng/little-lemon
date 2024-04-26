@@ -1,31 +1,35 @@
 import React, {useEffect, useState} from 'react';
 import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 
 const CustomHeader = () => {
 
     const navigation = useNavigation();
+    const isFocused = useIsFocused();
     const [imageUri, setImageUri] = useState(null);
     const [name, setName] = useState('');
 
+    const loadProfile = async () => {
+        const storedProfile = await AsyncStorage.getItem('profile');
+        const storedImage = await AsyncStorage.getItem('imageUri');
+
+        if (storedProfile) {
+            const profile = JSON.parse(storedProfile);
+            setName(profile.name);
+        }
+
+        if (storedImage) {
+            setImageUri(storedImage);
+        } 
+    };
+
     useEffect(() => {
-        const loadProfile = async () => {
-            const storedProfile = await AsyncStorage.getItem('profile');
-            const storedImage = await AsyncStorage.getItem('imageUri');
+        if (isFocused) {
+            loadProfile();
+        }
 
-            if (storedProfile) {
-                const profile = JSON.parse(storedProfile);
-                setName(profile.name);
-            }
-
-            if (storedImage) {
-                setImageUri(storedImage);
-            }
-        };
-
-        loadProfile();
-    }, []);
+    }, [isFocused]);
 
     const getInitials = (name) => {
         return name ? name.substring(0, 2).toUpperCase() : '';
